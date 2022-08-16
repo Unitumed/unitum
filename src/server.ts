@@ -27,8 +27,8 @@ const app = express();
 const httpServer = createServer(app);
 export const io = new Server(httpServer, {
   cors: {
-    origin: "*"
-  }
+    origin: "*",
+  },
 });
 
 io.use(getUser);
@@ -73,7 +73,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "*"
+    origin: "*",
   })
 );
 app.use(helmet());
@@ -87,19 +87,6 @@ app.use("/api", searchRouter);
 app.use("/api/chat", chatRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/uploads", uploadsRoute);
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "./build")));
-  // Handle React routing, return all requests to React app
-  app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "./build", "index.html"));
-  });
-  app.use((err: Error, req: any, res: Response, next: NextFunction) => {
-    console.log(err);
-    res.status(500).json({ message: "Something went wrong" });
-  });
-}
-// Serve any static files
 
 //Mount api routes here
 
