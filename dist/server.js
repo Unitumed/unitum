@@ -33,15 +33,14 @@ const socket_io_1 = require("socket.io");
 const token_middleware_1 = require("./eventHandlers/token.middleware");
 const chat_2 = require("./eventHandlers/chat");
 const search_1 = __importDefault(require("./routes/search"));
-const path_1 = __importDefault(require("path"));
 //dotenv conf
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next);
 const app = (0, express_1.default)();
 const httpServer = (0, http_1.createServer)(app);
 exports.io = new socket_io_1.Server(httpServer, {
     cors: {
-        origin: "*"
-    }
+        origin: "*",
+    },
 });
 exports.io.use(token_middleware_1.getUser);
 exports.io.use(wrap(express_1.default.json()));
@@ -77,7 +76,7 @@ exports.io.on("connection", onConnection);
 //Body parser setup
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: "*"
+    origin: "*",
 }));
 app.use((0, helmet_1.default)());
 app.use((0, morgan_1.default)("dev"));
@@ -89,18 +88,6 @@ app.use("/api", search_1.default);
 app.use("/api/chat", chat_1.default);
 app.use("/api/contact", contact_1.default);
 app.use("/api/uploads", uploads_1.default);
-if (process.env.NODE_ENV === "production") {
-    app.use(express_1.default.static(path_1.default.join(__dirname, "./build")));
-    // Handle React routing, return all requests to React app
-    app.get("*", function (req, res) {
-        res.sendFile(path_1.default.join(__dirname, "./build", "index.html"));
-    });
-    app.use((err, req, res, next) => {
-        console.log(err);
-        res.status(500).json({ message: "Something went wrong" });
-    });
-}
-// Serve any static files
 //Mount api routes here
 httpServer.listen(process.env.PORT, () => {
     console.log(`Backend server running on ${process.env.PORT}`);
