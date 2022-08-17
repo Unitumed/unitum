@@ -2,6 +2,7 @@ import { config as dotenv } from "dotenv-flow";
 import express, { Response, NextFunction, Request } from "express";
 dotenv();
 import authRoutes from "./routes/auth";
+
 import userRoutes from "./routes/user";
 import communityRoutes from "./routes/community";
 import uploadsRoute from "./routes/uploads";
@@ -77,7 +78,7 @@ app.use(
   })
 );
 app.use(helmet());
-app.use(morgan("dev"));
+app.use(morgan("combined"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users/me", userRoutes);
