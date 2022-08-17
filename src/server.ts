@@ -78,7 +78,7 @@ app.use(
   })
 );
 app.use(helmet());
-app.use(morgan("combined"));
+app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users/me", userRoutes);
@@ -89,7 +89,7 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/uploads", uploadsRoute);
 
-app.get("/", (req: Request, res: Response) => res.json("Unitum Api"));
+app.get("/", (req: Request, res: Response) => res.send("Unitum Api"));
 //Mount api routes here
 
 httpServer.listen(process.env.PORT, () => {
