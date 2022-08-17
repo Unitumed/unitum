@@ -1,5 +1,5 @@
 import { config as dotenv } from "dotenv-flow";
-import express, { Response, NextFunction } from "express";
+import express, { Response, NextFunction, Request } from "express";
 dotenv();
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
@@ -88,6 +88,7 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/uploads", uploadsRoute);
 
+app.get("/", (req: Request, res: Response) => res.json("Unitum Api"));
 //Mount api routes here
 
 httpServer.listen(process.env.PORT, () => {

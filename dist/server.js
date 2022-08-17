@@ -88,6 +88,7 @@ app.use("/api", search_1.default);
 app.use("/api/chat", chat_1.default);
 app.use("/api/contact", contact_1.default);
 app.use("/api/uploads", uploads_1.default);
+app.get("/", (req, res) => res.json("Hello world"));
 //Mount api routes here
 httpServer.listen(process.env.PORT, () => {
     console.log(`Backend server running on ${process.env.PORT}`);
